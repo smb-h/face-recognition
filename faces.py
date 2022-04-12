@@ -19,7 +19,11 @@ with open("labels.pickle", 'rb') as f:
 
 cap = cv2.VideoCapture(0)
 
-while(True):
+stroke = 2
+
+img_item = "my-image.png"
+rec_stroke = 2
+while True:
     # Capture frame-by-frame
     ret, frame = cap.read()
     gray  = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -32,28 +36,24 @@ while(True):
 
         font = cv2.FONT_HERSHEY_SIMPLEX
         white_color = (255, 255, 255)
-        stroke = 2
-
         id_, conf = recognizer.predict(roi_gray)
         if conf >= 85:
             name = labels[id_]
             cv2.putText(frame, name, (x, y), font, 1, white_color, stroke, cv2.LINE_AA)
 
-        img_item = "my-image.png"
         cv2.imwrite(img_item, roi_color)
 
         # Draw rectangle
         rec_color = (255, 30, 30) # BGR as blue green red
-        rec_stroke = 2
         cv2.rectangle(frame, (x, y), (x+w, y+h), rec_color, rec_stroke)
         # detect eyes
         eyes = eye_cascade.detectMultiScale(roi_gray)
-        # for (ex, ey, ew, eh)in eyes:
-        #     cv2.rectangle(roi_color, (ex, ey), (ex+ew, ey+eh), (0, 255, 0), 2)
-        # detect smile
-        # smiles = smile_cascade.detectMultiScale(roi_gray)
-        # for (sx, sy, sw, sh)in smiles:
-        #     cv2.rectangle(roi_color, (sx, sy), (sx+sw, sy+sh), (0, 255, 0), 2)
+            # for (ex, ey, ew, eh)in eyes:
+            #     cv2.rectangle(roi_color, (ex, ey), (ex+ew, ey+eh), (0, 255, 0), 2)
+            # detect smile
+            # smiles = smile_cascade.detectMultiScale(roi_gray)
+            # for (sx, sy, sw, sh)in smiles:
+            #     cv2.rectangle(roi_color, (sx, sy), (sx+sw, sy+sh), (0, 255, 0), 2)
 
 
 
