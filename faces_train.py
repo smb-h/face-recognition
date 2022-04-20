@@ -26,7 +26,7 @@ for root, dirs, files in os.walk(images_dir):
             # label = os.path.basename(os.path.dirname(path)).replace(" ", "-").lower()
             label = os.path.basename(root).replace(" ", "-").lower()
 
-            if not label in label_ids:
+            if label not in label_ids:
                 label_ids[label] = current_id
                 current_id += 1
 
